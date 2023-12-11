@@ -1,0 +1,5 @@
+venv
+.env
+__pycache__
+
+.assistant.json.lock
