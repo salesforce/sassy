@@ -1,0 +1,327 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "version": "1.0.0",
+    "title": "Salesforce Core APIs"
+  },
+  "servers": [
+    {
+      "url": "https://{{host}}/services"
+    }
+  ],
+  "paths": {
+    "/data/v59.0/sobjects/{sObject}": {
+      "get": {
+        "summary": "Gets basic metadata for a specified object, including some object properties, recent items, and URIs for other resources related to the object.",
+        "operationId": "getObjectMetadata",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "sObject",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minimum": 1
+            },
+            "description": "The salesforce object name"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The basic metadata for a specified object, including some object properties, recent items, and URIs for other resources related to the object.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Message"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/data/v59.0/sobjects/Account": {
+      "post": {
+        "summary": "Create a new account record. Accounts are companies that you're doing business with.",
+        "operationId": "postAccount",
+        "requestBody": {
+          "description": "The account detail.",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Account"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/data/v59.0/sobjects/Contact": {
+      "post": {
+        "summary": "Create a new contact record. In Salesforce, the people who work at your accounts are called contacts. Query salesforce to get accountID if an account name is specified",
+        "operationId": "postContact",
+        "requestBody": {
+          "description": "The contact detail.",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Contact"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/data/v59.0/sobjects/Task": {
+      "post": {
+        "summary": "Create a new tasks, for example, logging a call, sending an email, or a generic tasks. When logging a call, the status should be 'Completed'. Query Contact or Lead for WhoId to find the ID if name is specified.",
+        "operationId": "postTask",
+        "requestBody": {
+          "description": "The task detail.",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Task"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/data/v59.0/sobjects/Lead": {
+      "post": {
+        "summary": "Create a new lead record. Leads are people and companies that you’ve identified as potential customers.",
+        "operationId": "postLead",
+        "requestBody": {
+          "description": "The lead detail.",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Lead"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/apexrest/examples/welcome": {
+      "get": {
+        "summary": "Get a welcome message from Salesforce via Apex REST.",
+        "operationId": "getWelcomeMessage",
+        "responses": {
+          "200": {
+            "description": "A welcome message from Salesforce.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Message"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/data/v59.0/query": {
+      "get": {
+        "summary": "Query Salesforce CRM records.",
+        "operationId": "querySalesforceRecords",
+        "parameters": [
+          {
+            "name": "q",
+            "in": "query",
+            "description": "A valid Salesforce SOQL query used to query the records.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Query result containing Salesforce record data.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Message"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "security": [
+    {
+      "oauth2AuthCode": [ "full" ]
+    }
+  ],
+  "components": {
+    "securitySchemes": {
+      "oauth2AuthCode": {
+        "type": "oauth2",
+        "flows": {
+          "authorizationCode": {
+            "authorizationUrl": "",
+            "tokenUrl": "",
+            "scopes": {
+              "full": "full access"
+            }
+          }
+        }
+      }
+    },
+    "schemas": {
+      "Account": {
+        "properties": {
+          "Name": {
+            "type": "string"
+          },
+          "Phone": {
+            "type": "string"
+          },
+          "AccountNumber": {
+            "type": "string"
+          },
+          "Site": {
+            "type": "string"
+          },
+          "Type": {
+            "type": "string"
+          },
+          "Industry": {
+            "type": "string"
+          },
+          "BillingCity": {
+            "type": "string"
+          },
+          "BillingState": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "Name"
+        ]
+      },
+      "Contact": {
+        "properties": {
+          "FirstName": {
+            "type": "string"
+          },
+          "LastName": {
+            "type": "string"
+          },
+          "Title": {
+            "type": "string"
+          },
+          "Phone": {
+            "type": "string"
+          },
+          "Email": {
+            "type": "string"
+          },
+          "AccountId": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "LastName"
+        ]
+      },
+      "Task": {
+        "properties": {
+          "Status": {
+            "type": "string"
+          },
+          "Subject": {
+            "type": "string"
+          },
+          "WhoId": {
+            "type": "string"
+          },
+          "Description": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "LastName"
+        ]
+      },
+      "Lead": {
+        "properties": {
+          "FirstName": {
+            "type": "string"
+          },
+          "LastName": {
+            "type": "string"
+          },
+          "Company": {
+            "type": "string"
+          },
+          "Title": {
+            "type": "string"
+          },
+          "Email": {
+            "type": "string"
+          },
+          "Status": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "LastName", "Company", "Status"
+        ]
+      },
+      "Message": {
+        "required": [
+          "content"
+        ],
+        "properties": {
+          "content": {
+            "type": "string"
+          }
+        }
+      },
+      "Error": {
+        "required": [
+          "code",
+          "message"
+        ],
+        "properties": {
+          "code": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "message": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}
