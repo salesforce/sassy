@@ -8,9 +8,8 @@ from pydantic import BaseModel
 from quart import Quart, Response, request, jsonify
 from logging import Logger
 from logging.config import dictConfig
-from openai.types.beta.threads import \
-        MessageContentText, \
-        RequiredActionFunctionToolCall
+from openai.types.beta.threads import RequiredActionFunctionToolCall, \
+        TextContentBlock
 
 from .functions import FunctionRegistry
 
@@ -84,9 +83,9 @@ class BaseServer(ABC):
                         req.thread_id,
                         run.id,
                         run_status
-                            .required_action
-                            .submit_tool_outputs
-                            .tool_calls,
+                        .required_action
+                        .submit_tool_outputs
+                        .tool_calls,
                         req.security)
                 except Exception as e:
                     self._openai.beta.threads.runs.cancel(
@@ -101,7 +100,7 @@ class BaseServer(ABC):
             ).data[0].content[0]
 
         match content:
-            case MessageContentText():
+            case TextContentBlock():
                 response = content.text.value
             case _:
                 response = "unhandled message content type"

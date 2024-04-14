@@ -69,7 +69,8 @@ class RESTFunctionInvoker(FunctionInvoker):
                 params, _, url, headers = self._prep_request(bearer, **kwargs)
                 return requests.get(url, params=params, headers=headers).json()
             case "post":
-                params, body, url, headers = self._prep_request(bearer, **kwargs)
+                params, body, url, headers = self._prep_request(
+                        bearer, **kwargs)
                 return requests.post(
                         url, params=params, json=body, headers=headers).json()
 
