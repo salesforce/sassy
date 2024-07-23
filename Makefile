@@ -6,3 +6,11 @@ install:
 compile:
 	poetry run flake8
 	poetry run pyright
+
+.PHONY: update
+update:
+	poetry update
+
+.PHONY: serve
+run:
+	poetry run main serve
