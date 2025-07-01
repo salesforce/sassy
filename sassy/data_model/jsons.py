@@ -8,27 +8,63 @@ class JsonSchema(BaseModel):
 
 
 class JsonObject(JsonSchema):
-    type: Literal["object"] = "object"
+    type: Literal[
+            "object",
+            "array",
+            "number",
+            "string",
+            "boolean",
+            "null"] = "object"
     properties: dict[str, JsonSchema]
     required: list[str] = []
 
 
 class JsonArray(JsonSchema):
-    type: Literal["array"] = "array"
+    type: Literal[
+            "object",
+            "array",
+            "number",
+            "string",
+            "boolean",
+            "null"] = "array"
     items: JsonSchema
 
 
 class JsonNumber(JsonSchema):
-    type: Literal["number"] = "number"
+    type: Literal[
+            "object",
+            "array",
+            "number",
+            "string",
+            "boolean",
+            "null"] = "number"
 
 
 class JsonString(JsonSchema):
-    type: Literal["string"] = "string"
+    type: Literal[
+            "object",
+            "array",
+            "number",
+            "string",
+            "boolean",
+            "null"] = "string"
 
 
 class JsonBoolean(JsonSchema):
-    type: Literal["boolean"] = "boolean"
+    type: Literal[
+            "object",
+            "array",
+            "number",
+            "string",
+            "boolean",
+            "null"] = "boolean"
 
 
 class JsonNull(JsonSchema):
-    type: Literal["null"] = "null"
+    type: Literal[
+            "object",
+            "array",
+            "number",
+            "string",
+            "boolean",
+            "null"] = "null"
